@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"assignment3/models"
-	"encoding/json"
+	"fmt"
+	"html/template"
 	"math/rand"
 	"net/http"
 )
@@ -14,26 +14,25 @@ func NewStatusController() StatusController {
 	return &StatusControllerImpl{}
 }
 
-func (controller *StatusControllerImpl) UpdateStatus(w http.ResponseWriter, r *http.Request) {
+func (controller *StatusControllerImpl) GetStatus(w http.ResponseWriter, r *http.Request) {
 	method := r.Method
 
 	if method != http.MethodGet {
 		http.Error(w, "invalid method", http.StatusBadRequest)
-		return
 	}
+
+	t := template.Must(template.ParseFiles("template.html"))
 
 	randomValueWater := rand.Intn(100)
 	randomValueWind := rand.Intn(100)
 
-	tempStatus := models.Status{
-		Water: randomValueWater,
-		Wind:  randomValueWind,
-	}
-
 	response := map[string]interface{}{
-		"status": tempStatus,
+		"status": map[string]interface{}{
+			"water": randomValueWater,
+			"wind":  randomValueWind,
+		},
 	}
 
-	w.Header().Add("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	fmt.Println(response)
+	t.ExecuteTemplate(w, "template.html", response)
 }

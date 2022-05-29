@@ -5,5 +5,5 @@ import (
 )
 
 type StatusController interface {
-	UpdateStatus(w http.ResponseWriter, r *http.Request)
+	GetStatus(w http.ResponseWriter, r *http.Request)
 }

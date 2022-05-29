@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="15">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>status water and wind</title>
+</head>
+<body>
+  {{$cond1 := ge .status.water 6}}
+  {{$cond2 := le .status.water 8}}
+
+  {{if le .status.water 5}}
+    <p>WATER : <b>AMAN</b></p>
+  {{else if and $cond1 $cond2}}
+    <p>WATER : <b>SIAGA</b></p>
+  {{else if gt .status.water 8}}
+    <p>WATER : <b>BAHAYA</b></p>
+  {{end}}
+
+  {{$cond3 := ge .status.wind 7}}
+  {{$cond4 := le .status.wind 15}}
+
+  {{if le .status.wind 6}}
+    <p>WIND : <b>AMAN</b></p>
+  {{else if and $cond3 $cond4}}
+    <p>WIND : <b>SIAGA</b></p>
+  {{else if gt .status.wind 15}}
+    <p>WIND : <b>BAHAYA</b></p>
+  {{end}}
+
+</body>
+</html>
